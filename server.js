@@ -33,7 +33,15 @@ app.get("/api/users/:id", function (req, res, next) {
     "SELECT * FROM `users` WHERE `id` = ?",
     [id],
     function (err, results) {
-      res.json(results);
+      if (!err) {
+        if (results.affectedRows == 0) {
+          return res.status(404).json({ message: "Error to Get users id !!!" });
+        }
+        return res
+          .status(200)
+          .json({ message: `GET users id ${id} successfully.`, status: "ok", user: results[0]});
+      }
+      //res.json(results);
     }
   );
 });
@@ -49,7 +57,16 @@ app.post("/api/users/create", function (req, res, next) {
       req.body.avatar,
     ],
     function (err, results) {
-      res.json(results);
+      if (!err) {
+        if (results.affectedRows == 0) {
+          return res.status(404).json({ message: "Error to create users !!!" });
+        }
+        return res
+          .status(200)
+          .json({ message: "Create users successfully.", status: "ok" });
+      }
+      //res.json(results);
+      // res.json({ results: results, status: "ok" });
     }
   );
 });
@@ -66,7 +83,15 @@ app.put("/api/users/update", function (req, res, next) {
       req.body.id,
     ],
     function (err, results) {
-      res.json(results);
+      if (!err) {
+        if (results.affectedRows == 0) {
+          return res.status(404).json({ message: "Error to update users !!!" });
+        }
+        return res
+          .status(200)
+          .json({ message: "Updated users successfully.", status: "ok" });
+      }
+      // res.json(results);
     }
   );
 });
@@ -76,7 +101,16 @@ app.delete("/api/users/delete", function (req, res, next) {
     "DELETE FROM `users` WHERE id = ?",
     [req.body.id],
     function (err, results) {
-      res.json(results);
+      if (!err) {
+        if (results.affectedRows == 0) {
+          return res.status(404).json({ message: "Error to delete users !!!" });
+        }
+        return res
+          .status(200)
+          .json({ message: "Delete users successfully.", status: "ok" });
+      }
+
+      //res.json(results);
     }
   );
 });

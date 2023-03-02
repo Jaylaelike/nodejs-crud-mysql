@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.get("/api/users", function (req, res, next) {
   connection.query(
-    "SELECT * FROM `users` WHERE 1;",
+    "SELECT * FROM `users` WHERE 1 ORDER BY id DESC;",
     function (err, results, fields) {
       res.json(results);
       console.log(results); // results contains rows returned by server
